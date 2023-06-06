@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 
 public class TargetPositionAuthoring : MonoBehaviour
 {
-    public float value;
+    public float3 value;
 }
 
 public class TargetPositionBaker : Baker<TargetPositionAuthoring>

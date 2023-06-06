@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.VisualScripting;
 
 public partial class MovingSystemBase : SystemBase
 {
     protected override void OnUpdate()
     {
         // main thread, nestable
-        foreach ((RefRW<LocalTransform> transform, Speed speed) in SystemAPI.Query<RefRW<LocalTransform>, Speed>())
+        foreach (MoveToPositionAspect moveAspect in SystemAPI.Query<MoveToPositionAspect>())
         {
-            transform.ValueRW.Position += new Unity.Mathematics.float3(SystemAPI.Time.DeltaTime * speed.value, 0, 0);
+            moveAspect.Move(SystemAPI.Time.DeltaTime, SystemAPI.GetSingleton<RandomComponent>().rnd);
         }
 
         // distributed threads, non nestable
